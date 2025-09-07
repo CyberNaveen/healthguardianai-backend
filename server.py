@@ -7,11 +7,19 @@ import google.generativeai as genai
 API_KEY = os.getenv("AIzaSyCqS9615Ggp1g7CvXmbEO-T4L9wUs4e9hE")
 genai.configure(api_key=API_KEY)
 
+# Initialize Flask app
 app = Flask(__name__)
 CORS(app)
 
+# Load Gemini model
 model = genai.GenerativeModel("gemini-pro")
 
+# Root route for browser check
+@app.route("/")
+def home():
+    return "HealthGuardianAI backend is running."
+
+# AI chat route
 @app.route("/ask", methods=["POST"])
 def ask():
     data = request.get_json()
@@ -25,5 +33,7 @@ def ask():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+# Run server
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
