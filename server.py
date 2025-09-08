@@ -22,7 +22,9 @@ if not API_KEY:
 
 try:
     genai.configure(api_key=API_KEY)
-    model = genai.GenerativeModel("gemini-pro")
+    # USE THE CORRECT MODEL NAME - CHOOSE ONE OF THESE:
+    model = genai.GenerativeModel("gemini-1.0-pro")  # Recommended
+    # model = genai.GenerativeModel("gemini-1.5-pro-latest")  # Alternative
     logger.info("Gemini AI configured successfully")
 except Exception as e:
     logger.error(f"Error configuring Gemini: {e}")
