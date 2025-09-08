@@ -9,10 +9,10 @@ CORS(app)
 
 # Load Gemini API key from environment variable
 API_KEY = os.environ.get("GEMINI_API_KEY")
+print(f"API Key found: {bool(API_KEY)}")  # Debug print
+
 if not API_KEY:
-    print("ERROR: GEMINI_API_KEY environment variable not set!")
-    # You might want to handle this differently in production
-    API_KEY = "your_fallback_key_here"  # Remove this in production
+    raise ValueError("GEMINI_API_KEY environment variable is required")
 
 try:
     genai.configure(api_key=API_KEY)
