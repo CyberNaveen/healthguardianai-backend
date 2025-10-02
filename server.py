@@ -20,16 +20,16 @@ def ask():
     data = request.get_json()
     user_message = data.get("message", "")
     if not user_message:
-        return jsonify({"error": "No message provided"}), 400
+        return "No message provided", 400
 
     try:
         response = model.generate_content(user_message)
         reply = getattr(response, "text", None)
         if not reply and response.candidates:
             reply = response.candidates[0].content.parts[0].text
-        return jsonify({"response": reply or "No reply generated."})
+        return reply or "No reply generated.", 200, {'Content-Type': 'text/plain'}
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return str(e), 500, {'Content-Type': 'text/plain'}
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
